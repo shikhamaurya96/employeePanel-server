@@ -93,17 +93,21 @@ exports.employeeUpdateController = async(req,res)=>{
 
 exports.employeeSearchController = async(req,res)=>{
     try{
-const {name} = req.query;
-console.log(name)
-if(!name){
+const {query} = req.query;
+console.log(query)
+if(!query){
     return res.status(400).json({ message: 'Query parameter is required.' });
 }
 const employees = await employeeModel.find({
-    Name:{ $regex: name, $options: 'i' }
+    $or: [
+        { Name: query },
+        { Email: query }
+      ]
   });
   res.status(200).send(employees);
     }
     catch(err){
+        console.log("err>>>",err)
         res.status(500).send({error:err.message})
     }
 }

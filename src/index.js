@@ -33,7 +33,7 @@ mongoose.connect(`${process.env.db_URL}/${db_name}`).then(()=>{
    app.delete(`${BASE_PATH}/deleteItem/:id`,verifyToken,deleteListItemController)
     app.get(`${BASE_PATH}/employee/:id`,verifyToken,employeeDataController)
     app.put(`${BASE_PATH}/updateEmployee/:id`,verifyToken,upload.single("image"),employeeUpdateController)
-    app.get(`${BASE_PATH}/employee/search`,verifyToken,employeeSearchController)
+    app.get(`${BASE_PATH}/list/search`,verifyToken,employeeSearchController)
    app.listen(process.env.PORT,()=>{
     console.log("server started")
 });
