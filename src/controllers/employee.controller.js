@@ -83,7 +83,13 @@ exports.employeeUpdateController = async(req,res)=>{
         Designation:designation,
         Gender:gender,
         Course:course,
-        CreateDate:createDate})
+        CreateDate:createDate});
+        if(resp){
+         return res.status(200).send(resp)
+        }
+        else{
+            res.status(400).send({message:"employee not updated"})
+        }
     }
     catch(err){
         res.status(500).send({error:err.message})
@@ -100,8 +106,8 @@ if(!query){
 }
 const employees = await employeeModel.find({
     $or: [
-        { Name: query },
-        { Email: query }
+        { Name: { $regex: query, $options: 'i' } },
+        { Email:{ $regex: query, $options: 'i' } }
       ]
   });
   res.status(200).send(employees);
